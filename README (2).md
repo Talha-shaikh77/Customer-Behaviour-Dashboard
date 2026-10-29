@@ -1,6 +1,6 @@
 # Customer Behaviour Dashboard
 
-A Power BI dashboard for exploring customer purchasing behaviour, sales distribution, order frequency, customer demographics, and payment preferences using a synthetic, Zepto-inspired online grocery dataset.
+An interactive Power BI dashboard analysing grocery sales, customer purchasing behaviour, repeat orders, and payment preferences using a synthetic Zepto-inspired dataset.
 
 > **Project type:** Data Analytics & Business Intelligence  
 > **Author:** Talha Shaikh  
@@ -9,37 +9,71 @@ A Power BI dashboard for exploring customer purchasing behaviour, sales distribu
 ---
 
 ## 📊 Project Overview
+This repository contains an interactive Customer Behaviour Dashboard built with Power BI. It analyzes sales, customer purchasing patterns, product categories, and payment preferences using a synthetic, Zepto-inspired grocery dataset.
+
+Business Purpose: Help grocery retailers understand customer buying habits, identify important customer segments, and make better decisions about sales and customer retention.
 
 Understanding how customers shop can help businesses examine purchasing patterns, compare customer segments, and understand how sales are distributed across product categories and payment methods.
 
-The **Customer Behaviour Dashboard** brings these views together in a single interactive dashboard. It summarizes sales performance and customer activity, compares age groups, and displays payment preferences. Interactive slicers let users explore selected years, genders, age groups, and product categories.
+**Key Insights:**
 
-## 🎯 Project Objectives
+- Total sales, orders, average customer rating, and repeat customer rate
+- Customer purchase frequency and average orders per customer
+- Sales and quantity purchased by age group
+- Sales comparison across product categories and age groups
+- Sales distribution by payment method
+- Customer behaviour analysis by year, gender, age group, and product category
 
-- Summarize overall sales, order volume, average ratings, and customer purchasing frequency.
-- Compare purchasing quantity and sales across customer age groups.
-- Examine how many customers place one order versus multiple orders.
-- Compare category-level sales across age groups.
-- Explore the distribution of sales by payment method.
-- Support interactive exploration through dashboard filters.
+## 🛠️ Tools and Technologies
+
+- **Microsoft Power BI** — dashboard design and interactive data exploration
+- **DAX** — [ADD DETAILS OF MEASURES/CALCULATIONS USED, IF NEEDED]
+- **Microsoft Excel** — workbook format used for the dataset
+- **Kaggle** — dataset source
+
+## 📁 Project Structure
+
+Adjust this structure to match the files actually stored in the repository.
+
+```text
+Customer-Behaviour-Dashboard/
+├── README.md
+├── dashboard/
+│   └── [ADD POWER BI FILE NAME].pbix
+├── images/
+│   ├── dashboard-overview.png
+│   └── dashboard-details.png
+├── data/
+│   └── [ADD DATASET FILE OR SOURCE INSTRUCTIONS]
+└── docs/
+    └── [ADD DATA DICTIONARY OR PROJECT NOTES, IF AVAILABLE]
+```
+
+## 🗃️ Dataset and Data Source
+
+This project uses a **synthetic, Zepto-inspired online grocery dataset sourced from Kaggle**. It is intended for learning and portfolio demonstration, not as a source of official Zepto business results.
+
+The workbook used during development contains these data areas:
+
+- **Customer:** customer information
+- **Product:** product information
+- **Order:** order records
+- **Transaction:** transaction and payment information
+- **Rating:** customer rating records
+- **Delivery:** delivery records
+
+**Dataset name:** Zepto_Dataset 
+**Dataset link:** https://www.kaggle.com/datasets/ashishjangir6494/zepto-inspired-online-grocery-and-delivery-dataset  
+**File format:** Excel workbook (`.xlsx`)  
+**Date coverage:** January 2023 – December 2024
+
+Refer to the original dataset page for its exact description, attribution requirements, and terms of use. Before uploading the raw workbook, verify that its licence permits redistribution and that any customer information is safe to publish.
 
 ## 🖼️ Dashboard Preview
 
 ### Dashboard Overview
 
-![Customer Behaviour Dashboard — Overview](images/dashboard-overview.png)
-
-*The full dashboard, including KPI cards, filters, customer and sales charts, and payment-method distribution.*
-
-**Screenshot file:** Save a screenshot of the complete dashboard as `images/dashboard-overview.png` in this repository.
-
-### Dashboard Details
-
-![Customer Behaviour Dashboard — Detailed View](images/dashboard-details.png)
-
-*A closer view of the dashboard visualizations, including purchase frequency, age-group comparisons, category sales, and payment methods.*
-
-**Screenshot file:** Save a second screenshot with the charts clearly readable as `images/dashboard-details.png` in the same `images/` folder. These image paths are placeholders until the screenshots are added to GitHub.
+<img width="883" height="499" alt="image" src="https://github.com/user-attachments/assets/762ce6bf-bdd2-4b0e-911e-0c40de5d3715" />
 
 ## ✨ Key Features
 
@@ -115,36 +149,6 @@ Most customers are in the one- or two-order groups, and the customer count decre
 
 The dashboard reports a repeat customer rate of **68.52%** and an average of **2.30 orders per active customer**. These metrics summarize observed purchasing patterns; they do not establish why customers return or predict future retention.
 
-## 🛠️ Tools and Technologies
-
-- **Microsoft Power BI** — dashboard design and interactive data exploration
-- **DAX** — [ADD DETAILS OF MEASURES/CALCULATIONS USED, IF NEEDED]
-- **Power Query** — [ADD DATA-CLEANING OR TRANSFORMATION DETAILS, IF USED]
-- **Microsoft Excel** — workbook format used for the dataset
-- **Kaggle** — dataset source
-
-Update this list to reflect the tools and steps actually used in the final project.
-
-## 🗃️ Dataset and Data Source
-
-This project uses a **synthetic, Zepto-inspired online grocery dataset sourced from Kaggle**. It is intended for learning and portfolio demonstration, not as a source of official Zepto business results.
-
-The workbook used during development contains these data areas:
-
-- **Customer:** customer information
-- **Product:** product information
-- **Order:** order records
-- **Transaction:** transaction and payment information
-- **Rating:** customer rating records
-- **Delivery:** delivery records
-
-**Dataset name:** [ADD ORIGINAL KAGGLE DATASET TITLE]  
-**Dataset link:** [ADD KAGGLE DATASET LINK]  
-**File format:** Excel workbook (`.xlsx`)  
-**Date coverage:** January 2023 – December 2024
-
-Refer to the original dataset page for its exact description, attribution requirements, and terms of use. Before uploading the raw workbook, verify that its licence permits redistribution and that any customer information is safe to publish.
-
 ## 🚀 How to Explore the Dashboard
 
 1. Open the Power BI report in Microsoft Power BI Desktop.
@@ -152,51 +156,11 @@ Refer to the original dataset page for its exact description, attribution requir
 3. Select a year, gender, age group, or product category from the slicers.
 4. Compare how the displayed charts respond to the selected filters.
 5. Use the age-group and category charts to compare sales patterns.
-6. Explore the payment-method treemap to compare sales contributions.
-7. Use **Customers by Number of Orders** to inspect the distribution of customers by purchase frequency.
+6. Explore the payment-method tree map to compare sales contributions.
+7. Use **Order Volume by Customer Purchase-Frequency Group** to inspect the distribution of customers by purchase frequency.
 8. Clear the slicers to return to the unfiltered view.
 
 The filter behaviour depends on the report's data model and visual-interaction settings.
-
-## ⚙️ Setup Instructions
-
-### Prerequisites
-
-- Microsoft Power BI Desktop
-- Access to the project repository
-- Access to the dataset, subject to the source terms
-
-### Steps
-
-1. Clone or download the repository: [ADD REPOSITORY LINK].
-2. Locate the report file: `[ADD POWER BI FILE NAME].pbix`.
-3. Open the file in Microsoft Power BI Desktop.
-4. If the report uses an external data source, update its path and credentials as required.
-5. Refresh the data if required, then explore the dashboard.
-
-**Dataset access instructions:** [ADD DATASET DOWNLOAD/ACCESS STEPS]
-
-Replace the placeholders with actual filenames and links before publishing. If the `.pbix` file or dataset is not included in the repository, explain how a reviewer can access it.
-
-## 📁 Suggested Project Structure
-
-Adjust this structure to match the files actually stored in the repository.
-
-```text
-Customer-Behaviour-Dashboard/
-├── README.md
-├── dashboard/
-│   └── [ADD POWER BI FILE NAME].pbix
-├── images/
-│   ├── dashboard-overview.png
-│   └── dashboard-details.png
-├── data/
-│   └── [ADD DATASET FILE OR SOURCE INSTRUCTIONS]
-└── docs/
-    └── [ADD DATA DICTIONARY OR PROJECT NOTES, IF AVAILABLE]
-```
-
-The `images/` folder should contain the two screenshots referenced in the Dashboard Preview section. The other folders are optional; include them only if they exist in your repository.
 
 ## 🔮 Future Improvements
 
