@@ -178,7 +178,6 @@ These are possible future enhancements, not features currently claimed to be imp
 
 Data Science student interested in data analytics, business intelligence, and solving practical business problems with data.
 
-- **GitHub profile:** [ADD GITHUB PROFILE LINK]
-- **Project repository:** [ADD REPOSITORY LINK]
-- **Live dashboard:** [ADD LIVE DASHBOARD LINK, IF AVAILABLE]
-- **LinkedIn:** [ADD LINKEDIN PROFILE LINK, IF AVAILABLE]
+* LinkedIn: [Talha Shaikh](https://www.linkedin.com/in/talha-shaikh-3847523b4/)
+* GitHub: [Talha-shaikh77](https://github.com/Talha-shaikh77) 
+* Email: talhashaikh078696@gmail.com
