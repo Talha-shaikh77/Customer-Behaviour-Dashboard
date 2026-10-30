@@ -1,0 +1,135 @@
+/*
+Customer Behaviour Dashboard — DAX measures
+Author: Talha Shaikh
+
+Source workbook tables / relevant columns:
+  'customer'     : customer_id, age, gender, ...
+  'product'      : product_id, category, ...
+  'order'        : order_id, customer_id, order_date, order_status
+  'transaction'  : transaction_id, order_id, product_id, quantity, amount, payment_mode
+  'rating'       : rating_id, order_id, rating, review
+  'delivery'     : delivery_id, order_id, delivery_time_mins, delivery_status, distance_km
+
+Create each measure individually in Power BI (Modeling > New measure).
+Create the Order Frequency table separately using Modeling > New table.
+
+Model relationships are required for slicers to filter the visuals correctly. A typical
+model connects customer -> order, order -> transaction/rating/delivery, and product -> transaction.
+Check that your actual Power BI model uses the correct key columns before pasting these formulas.
+*/
+
+// ============================================================
+// 1. KPI MEASURES
+// ============================================================
+
+Total Sales =
+SUM ( 'transaction'[amount] )
+
+Total Orders =
+DISTINCTCOUNT ( 'order'[order_id] )
+
+Total Quantity =
+SUM ( 'transaction'[quantity] )
+
+Average Rating =
+AVERAGE ( 'rating'[rating] )
+
+// Active customers are customers with at least one order in the current filter context.
+Active Customers =
+DISTINCTCOUNT ( 'order'[customer_id] )
+
+Average Orders per Customer =
+DIVIDE ( [Total Orders], [Active Customers], 0 )
+
+// A repeat customer is an active customer with more than one distinct order.
+Repeat Customer Count =
+VAR CustomerOrderCounts =
+    ADDCOLUMNS (
+        VALUES ( 'order'[customer_id] ),
+        "OrderCount", CALCULATE ( DISTINCTCOUNT ( 'order'[order_id] ) )
+    )
+RETURN
+    COUNTROWS (
+        FILTER ( CustomerOrderCounts, [OrderCount] > 1 )
+    )
+
+Repeat Customer Rate =
+DIVIDE ( [Repeat Customer Count], [Active Customers], 0 )
+
+/*
+Formatting for KPI cards:
+- Total Sales: currency or whole number, depending on the report's chosen display.
+- Total Orders / Total Quantity / Active Customers / Repeat Customer Count: whole number.
+- Average Rating / Average Orders per Customer: 2 decimal places.
+- Repeat Customer Rate: Percentage, 2 decimal places.
+  Do not multiply Repeat Customer Rate by 100 if you apply Percentage formatting.
+*/
+
+// ============================================================
+// 2. CUSTOMER PURCHASE-FREQUENCY CHART
+// ============================================================
+
+/*
+Create this as a calculated table (Modeling > New table), not a measure.
+It supplies the 1–9 order-frequency categories shown on the chart.
+*/
+
+Order Frequency =
+GENERATESERIES ( 1, 9, 1 )
+
+/*
+Create this as a measure. Put 'Order Frequency'[Value] on the chart's X-axis
+and [Customers by Order Frequency] in Values.
+The measure counts customers with exactly the selected number of distinct orders.
+When a Year slicer is active, frequency is calculated within the current filter context.
+*/
+
+Customers by Order Frequency =
+VAR SelectedN =
+    SELECTEDVALUE ( 'Order Frequency'[Value] )
+VAR CustomerOrderCounts =
+    ADDCOLUMNS (
+        VALUES ( 'order'[customer_id] ),
+        "OrderCount", CALCULATE ( DISTINCTCOUNT ( 'order'[order_id] ) )
+    )
+RETURN
+    IF (
+        ISBLANK ( SelectedN ),
+        BLANK (),
+        COUNTROWS (
+            FILTER ( CustomerOrderCounts, [OrderCount] = SelectedN )
+        )
+    )
+
+// ============================================================
+// 3. MEASURES USED BY THE OTHER CHARTS
+// ============================================================
+
+/*
+The following charts can reuse [Total Sales] or [Total Quantity]. The category/age-group
+or payment-mode field provides the grouping; separate measures are not necessary unless
+your Power BI model or visual setup requires a different calculation.
+
+- Donut: category = customer age-group field; value = [Total Quantity]
+- Bar: category = customer age-group field; value = [Total Sales]
+- Stacked column: axis/legend = product category and customer age-group field;
+  value = [Total Sales]
+- Treemap: group = 'transaction'[payment_mode]; value = [Total Sales]
+*/
+
+// ============================================================
+// 4. OPTIONAL HELPER COLUMN — USE ONLY IF YOUR MODEL NEEDS IT
+// ============================================================
+
+/*
+The dashboard has Year and Age Group slicers, but the exact implementation and the
+age-band boundaries used in your report were not confirmed. If these fields already
+exist in Power BI or were created in Power Query, do not create duplicates.
+
+Optional Year calculated column in the 'order' table:
+
+Order Year = YEAR ( 'order'[order_date] )
+
+Do not create an Age Group calculated column until you confirm the exact age ranges
+used by your dashboard. Use the same existing Age Group field as the slicer and charts.
+*/
