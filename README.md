@@ -38,15 +38,12 @@ Adjust this structure to match the files actually stored in the repository.
 ```text
 Customer-Behaviour-Dashboard/
 ├── README.md
-├── dashboard/
-│   └── [ADD POWER BI FILE NAME].pbix
-├── images/
-│   ├── dashboard-overview.png
-│   └── dashboard-details.png
-├── data/
-│   └── [ADD DATASET FILE OR SOURCE INSTRUCTIONS]
-└── docs/
-    └── [ADD DATA DICTIONARY OR PROJECT NOTES, IF AVAILABLE]
+├── Customer Behaviour Dashboard TS.pbix
+│   
+├── Zepto_Dataset.xlsx
+│   
+└── DAX Measures.txt
+    
 ```
 
 ## 🗃️ Dataset and Data Source
