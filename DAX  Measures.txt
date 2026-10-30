@@ -2,39 +2,37 @@
 // KPI MEASURES
 // ============================================================
 
-Total Sales = SUM ( 'transaction'[amount] )
+Total Sales = SUM ('transaction'[amount])
 
-Total Orders = DISTINCTCOUNT ( 'order'[order_id] )
+Total Orders = DISTINCTCOUNT ('order'[order_id])
 
-Total Quantity = SUM ( 'transaction'[quantity] )
+Total Quantity = SUM ('transaction'[quantity])
 
-Average Rating = AVERAGE ( 'rating'[rating] )
+Average Rating = AVERAGE ('rating'[rating])
 
-// Active customers are customers with at least one order in the current filter context.
 Active Customers = DISTINCTCOUNT ( 'order'[customer_id] )
 
-Average Orders per Customer = DIVIDE ( [Total Orders], [Active Customers], 0 )
+Average Orders per Customer = DIVIDE ([Total Orders], [Active Customers], 0)
 
-// A repeat customer is an active customer with more than one distinct order.
 Repeat Customer Count =
 VAR CustomerOrderCounts =
     ADDCOLUMNS (
-        VALUES ( 'order'[customer_id] ),
-        "OrderCount", CALCULATE ( DISTINCTCOUNT ( 'order'[order_id] ) )
+        VALUES ('order'[customer_id]),
+        "OrderCount", CALCULATE (DISTINCTCOUNT('order'[order_id]))
     )
 RETURN
     COUNTROWS (
-        FILTER ( CustomerOrderCounts, [OrderCount] > 1 )
+        FILTER (CustomerOrderCounts, [OrderCount] > 1)
     )
 
-Repeat Customer Rate = DIVIDE ( [Repeat Customer Count], [Active Customers], 0 )
+Repeat Customer Rate = DIVIDE ([Repeat Customer Count], [Active Customers], 0)
 
 /*
 Create this as a calculated table (Modeling > New table), not a measure.
 It supplies the 1–9 order-frequency categories shown on the chart.
 */
 
-Order Frequency = GENERATESERIES ( 1, 9, 1 )
+Order Frequency = GENERATESERIES (1, 9, 1)
 
 /*
 Create this as a measure. Put 'Order Frequency'[Value] on the chart's X-axis
@@ -45,17 +43,29 @@ When a Year slicer is active, frequency is calculated within the current filter 
 
 Customers by Order Frequency =
 VAR SelectedN =
-    SELECTEDVALUE ( 'Order Frequency'[Value] )
+    SELECTEDVALUE ('Order Frequency'[Value])
 VAR CustomerOrderCounts =
     ADDCOLUMNS (
-        VALUES ( 'order'[customer_id] ),
-        "OrderCount", CALCULATE ( DISTINCTCOUNT ( 'order'[order_id] ) )
+        VALUES ('order'[customer_id]),
+        "OrderCount", CALCULATE (DISTINCTCOUNT('order'[order_id]))
     )
 RETURN
     IF (
-        ISBLANK ( SelectedN ),
+        ISBLANK (SelectedN),
         BLANK (),
         COUNTROWS (
-            FILTER ( CustomerOrderCounts, [OrderCount] = SelectedN )
+            FILTER (CustomerOrderCounts, [OrderCount] = SelectedN)
         )
+    )
+
+Age Group = 
+VAR CustomerAge = Customer[age]
+RETURN
+    SWITCH(
+        TRUE(),
+        ISBLANK(CustomerAge), "Unknown",
+        CustomerAge < 25, "Young",
+        CustomerAge < 40, "Adult",
+        CustomerAge < 60, "Middle-aged",
+        "Senior"
     )
